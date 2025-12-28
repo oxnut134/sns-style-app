@@ -1,6 +1,6 @@
 import Header from "../components/header";
 import { useState, useEffect } from "react";
-import { auth } from "./firebase"; 
+import { auth } from "./firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -77,6 +77,9 @@ export default function Login() {
     } catch (error) {
       console.error("ログインエラー:", error.message);
       setError("ログインに失敗しました: " + error.message);
+    } finally {
+      setIsLoading(false);
+      setShowMessage(false);
     }
   };
   //-------------------------------------------------------------
@@ -141,7 +144,7 @@ export default function Login() {
             postUserName: user ? user.name : "Unknown",
             user_id: post.user_id,
             uid: post.user_id,
-            totalLikeCount: post.totalMyLikeCount, 
+            totalLikeCount: post.totalMyLikeCount,
             firstMyLikeCount: post.firstMyLikeCount,
             lastMyLikeCount: post.lastMyLikeCount,
             isLikeClicked: post.isLikeClicked,
